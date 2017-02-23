@@ -1,5 +1,6 @@
 #2016-2017 PERSONAL PROJECTS: TurtleChat!
-#WRITE YOUR NAME HERE!
+#WRITE YOUR NAME HERE! MAHD QUMSEYA 
+
 
 #####################################################################################
 #                                   IMPORTS                                         #
@@ -9,6 +10,14 @@
 #Finally, from the turtle_chat_widgets module, import two classes: Button and TextInput
 #####################################################################################
 #####################################################################################
+
+
+from turtle_chat_widgets import Button
+from turtle_chat_widgets import TextInput
+from turtle_chat_client import Client
+import turtle
+turtle.ht()
+
 
 #####################################################################################
 #                                   TextBox                                         #
@@ -37,6 +46,31 @@
 #   \r to your string.  Test it out at the Python shell for practice
 #####################################################################################
 #####################################################################################
+wn=turtle.Screen()
+#wn.bgcolor("green")
+class TextBox(TextInput):
+    def draw_box(self):
+        box_turtle = turtle.clone()
+        box_turtle.speed(0)
+        box_turtle.penup()
+        box_turtle.goto(100,100)
+        box_turtle.pendown()
+        box_turtle.goto(100,-100)       #This creates a box for the input
+        box_turtle.goto(-100,-100)
+        box_turtle.goto(-100,100)
+        box_turtle.goto(100,100)
+        box_turtle.ht()
+
+    def write_msg(self):
+        self.writer.clear()
+        
+    
+        self.new_msg=self.new_msg
+        self.writer.clear()
+        self.writer.write(self.get_msg())
+        
+
+
 
 #####################################################################################
 #                                  SendButton                                       #
@@ -55,6 +89,9 @@
 #      you send messages and update message displays.
 #####################################################################################
 #####################################################################################
+
+class SendButton(Button):
+    
 
 
 ##################################################################
@@ -80,7 +117,8 @@ class View:
         ###
         #Store the username and partner_name into the instance.
         ###
-
+        self.username=username
+        self.partner_name=partner_name
         ###
         #Make a new Client object and store it in this instance of View
         #(for example, self).  The name of the instance should be my_client
