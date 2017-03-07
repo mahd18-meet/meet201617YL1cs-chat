@@ -17,7 +17,7 @@ from turtle_chat_widgets import TextInput
 from turtle_chat_client import Client
 import turtle
 turtle.ht()
-
+msg_in_box = []
 
 #####################################################################################
 #                                   TextBox                                         #
@@ -47,7 +47,7 @@ turtle.ht()
 #####################################################################################
 #####################################################################################
 wn=turtle.Screen()
-#wn.bgcolor("green")
+wn.bgcolor("lightblue")
 class TextBox(TextInput):
     def draw_box(self):
         box_turtle = turtle.clone()
@@ -62,37 +62,53 @@ class TextBox(TextInput):
         box_turtle.ht()
 
     def write_msg(self):
-        self.writer.clear()
         
-    
-        self.new_msg=self.new_msg
+        self.new_msg=self.new_msg        #This is all used to write the message (I'm having trouble getting a new line)
         self.writer.clear()
         self.writer.write(self.get_msg())
+
+                                                                    
+        msg_in_box.append(self.get_msg())
+        print(len(msg_in_box))
         
+    
+    
+        
+test = TextBox() #REMOVE THIS LATER MAYBE
 
 
 
 #####################################################################################
 #                                  SendButton                                       #
 #####################################################################################
-#Make a class called SendButton, which will be a subclass of Button.
-#Button is an abstract class with one abstract method: fun.
-#fun gets called whenever the button is clicked.  Its jobs will be to
+#Make a class called SendButton, which will be a subclass of Button. CHECK
+#Button is an abstract class with one abstract method: fun. CHECK
+#fun gets called whenever the button is clicked.  Its jobs will be to WORKS SORTA
 #
-# 1. send a message to the other chat participant - to do this,
+# 1. send a message to the other chat participant - to do this, 
 #    you will need to call the send method of your Client instance
 # 2. update the messages that you see on the screen
 #
-#HINT: You may want to override the __init__ method so that it takes one additional
+#HINT: You may want to override the __init__ method so that it takes one additional CHECK
 #      input: view.  This will be an instance of the View class you will make next
 #      That class will have methods inside of it to help
 #      you send messages and update message displays.
 #####################################################################################
-#####################################################################################
 
 class SendButton(Button):
     
+    def __init__(self, view):
+        super(SendButton,self).__init__()
+        self.view = view
+        
 
+    
+    def fun(self,x=0 ,y=-300):
+        self.view.send_msg()
+        
+        print("Hi")
+        
+test = SendButton(3) #REMOVE THIS LATER MAYBE
 
 ##################################################################
 #                             View                               #
@@ -123,7 +139,7 @@ class View:
         #Make a new Client object and store it in this instance of View
         #(for example, self).  The name of the instance should be my_client
         ###
-
+        self.my_client = Client()
         ###
         #Set screen dimensions using turtle.setup
         #You can get help on this function, as with other turtle functions,
@@ -134,7 +150,7 @@ class View:
         #
         #at the Python shell.
         ###
-
+        turtle.setup(250,250)
         ###
         #This list will store all of the messages.
         #You can add strings to the front of the list using
@@ -142,6 +158,7 @@ class View:
         #or at the end of the list using
         #   self.msg_queue.append(a_msg_string)
         self.msg_queue=[]
+
         ###
 
         ###
@@ -149,17 +166,23 @@ class View:
         #You can use the clear() and write() methods to erase
         #and write messages for each
         ###
+        self.omw = turtle.clone()
+        
+        
+        
 
         ###
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
-
-        ###
+        self.TextBox = TextBox()
+        
+        self.SendButton= SendButton(self)
+        ##
         #Call your setup_listeners() function, if you have one,
         #and any other remaining setup functions you have invented.
         ###
-
+        
     def send_msg(self):
         '''
         You should implement this method.  It should call the
@@ -224,6 +247,7 @@ class View:
 #it once you have a working view, trying to run you chat#
 #view in different ways.                                #
 #########################################################
+    '''
 if __name__ == '__main__':
     my_view=View()
     _WAIT_TIME=200 #Time between check for new message, ms
@@ -238,4 +262,5 @@ if __name__ == '__main__':
                 my_view.msg_received(msg_in)
         turtle.ontimer(check,_WAIT_TIME) #Check recursively
     check()
+    '''
     turtle.mainloop()
